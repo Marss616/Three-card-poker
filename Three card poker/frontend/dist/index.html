@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Three Card Poker - Stake Engine</title>
+  <script type="module" crossorigin src="./assets/index-Ci3jMpZh.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-qC4UiDvo.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Header Navigation -->
+    <header class="header-bar">
+      <div class="brand-section">
+        <div class="logo-badge">STAKE</div>
+        <div class="game-title">Three Card Poker</div>
+        <span id="statusBadge" class="status-badge">Connecting...</span>
+      </div>
+      <div class="header-right">
+        <div class="balance-box">
+          <span class="balance-label">Balance</span>
+          <div>
+            <span id="balanceVal" class="balance-val">1,000.00</span>
+            <span id="balanceCurrency" style="font-size: 11px; color: #94a3b8; margin-left: 2px;">USD</span>
+          </div>
+        </div>
+        <button id="soundToggleBtn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
+        <button id="rulesBtn" class="icon-btn" title="Rules & Paytable" aria-label="Rules & Paytable">ℹ️</button>
+      </div>
+    </header>
+
+    <!-- Main Casino Table Felt -->
+    <main class="table-felt">
+      <!-- Watermark Inlay -->
+      <div class="table-watermark">
+        <h1>THREE CARD POKER</h1>
+        <p>Dealer Plays With Queen High or Better</p>
+      </div>
+
+      <!-- Result Banner Overlay (Click anywhere to dismiss) -->
+      <div id="resultBanner" class="result-banner">
+        <div id="resultTitle" class="result-title win">YOU WIN!</div>
+        <div id="resultDetail" class="result-detail">Player beats Dealer + Ante Bonus</div>
+        <div id="resultPayout" class="result-payout">Won: $3.00 (3.0x)</div>
+        <div class="dismiss-hint">Tap anywhere to close</div>
+      </div>
+
+      <!-- Dealer Hand Section -->
+      <section class="hand-area dealer-area">
+        <div class="area-label">
+          <span>Dealer</span>
+          <span id="dealerHandBadge" class="hand-badge">Pair of Queens</span>
+        </div>
+        <div id="dealerCards" class="cards-container"></div>
+      </section>
+
+      <!-- Center Wager Circles -->
+      <section class="table-center">
+        <div class="bet-spots">
+          <div class="bet-spot">
+            <span class="spot-title">ANTE</span>
+            <div id="spotAnte" class="spot-ring active">
+              <div class="placed-chip chip-1">$1</div>
+            </div>
+            <span id="anteAmount" class="spot-amount">$1.00</span>
+          </div>
+
+          <div class="bet-spot">
+            <span class="spot-title">PLAY</span>
+            <div id="spotPlay" class="spot-ring"></div>
+            <span id="playAmount" class="spot-amount">$0.00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Player Hand Section -->
+      <section class="hand-area player-area">
+        <div id="playerCards" class="cards-container"></div>
+        <div class="area-label" style="margin-top: 4px; margin-bottom: 0;">
+          <span>Player</span>
+          <span id="playerHandBadge" class="hand-badge">Straight</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Unified Responsive Control Panel -->
+    <footer class="control-panel">
+      <!-- Left: Chip Selectors -->
+      <div class="chips-row">
+        <button class="chip-btn chip-10c" data-val="0.1" aria-label="10 cents chip">0.1</button>
+        <button class="chip-btn chip-50c" data-val="0.5" aria-label="50 cents chip">0.5</button>
+        <button class="chip-btn chip-1 selected" data-val="1.0" aria-label="1 dollar chip">1</button>
+        <button class="chip-btn chip-5" data-val="5.0" aria-label="5 dollars chip">5</button>
+        <button class="chip-btn chip-25" data-val="25.0" aria-label="25 dollars chip">25</button>
+        <button class="chip-btn chip-100" data-val="100.0" aria-label="100 dollars chip">100</button>
+      </div>
+
+      <!-- Right: Bet Modifiers & Action Button -->
+      <div class="actions-group">
+        <div class="bet-input-box">
+          <button id="btnHalf" class="bet-mod-btn">½</button>
+          <span id="betValueDisplay" class="bet-value-display">$1.00</span>
+          <button id="btnDouble" class="bet-mod-btn">2×</button>
+        </div>
+
+        <button id="dealBtn" class="btn-primary deal-btn">
+          <span>DEAL</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- Rules & Paytable Modal -->
+    <div id="paytableModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title">Rules & Ante Bonus</h2>
+          <button id="closeModalBtn" class="icon-btn" aria-label="Close modal">✕</button>
+        </div>
+
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>Hand</th>
+              <th style="text-align: right;">Ante Bonus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mini Royal (A-K-Q Suited)</td>
+              <td class="mult">+20.0×</td>
+            </tr>
+            <tr>
+              <td>Straight Flush</td>
+              <td class="mult">+5.0×</td>
+            </tr>
+            <tr>
+              <td>Three of a Kind</td>
+              <td class="mult">+4.0×</td>
+            </tr>
+            <tr>
+              <td>Straight</td>
+              <td class="mult">+1.0×</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ul class="rules-list">
+          <li><strong>Dealer Qualification:</strong> Dealer must have Queen-high or better to qualify.</li>
+          <li><strong>Dealer Does Not Qualify:</strong> Ante pays 1.4×, Play bet pushes.</li>
+          <li><strong>Dealer Qualifies:</strong> Player beats Dealer pays 2.0×. Equal hands push (1.0×).</li>
+          <li><strong>Ante Bonus:</strong> Paid on qualifying high hands regardless of dealer showdown!</li>
+          <li><strong>RTP:</strong> 95.70% theoretical return to player.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
