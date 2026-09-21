@@ -1,11 +1,17 @@
-// Web Audio API sound synthesizer for self-contained audio effects
-
+// Web Audio API sound synthesizer with persistent mute state
 class SoundEffects {
   private ctx: AudioContext | null = null;
   private enabled: boolean = true;
 
   constructor() {
-    // AudioContext will be initialized on first user gesture
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("stake_three_card_poker_sound");
+        if (saved !== null) {
+          this.enabled = saved === "true";
+        }
+      } catch (_) {}
+    }
   }
 
   private initContext() {
@@ -22,6 +28,9 @@ class SoundEffects {
 
   public toggleMute(): boolean {
     this.enabled = !this.enabled;
+    try {
+      localStorage.setItem("stake_three_card_poker_sound", String(this.enabled));
+    } catch (_) {}
     return this.enabled;
   }
 
@@ -29,7 +38,6 @@ class SoundEffects {
     return this.enabled;
   }
 
-  // Chip placement sound
   public playChip() {
     if (!this.enabled) return;
     this.initContext();
@@ -53,7 +61,6 @@ class SoundEffects {
     osc.stop(now + 0.05);
   }
 
-  // Card slide / deal sound
   public playCardDeal(delayMs: number = 0) {
     if (!this.enabled) return;
     setTimeout(() => {
@@ -61,8 +68,7 @@ class SoundEffects {
       if (!this.ctx) return;
 
       const now = this.ctx.currentTime;
-      // White noise burst shaped as card friction
-      const bufferSize = this.ctx.sampleRate * 0.08;
+      const bufferSize = Math.floor(this.ctx.sampleRate * 0.08);
       const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++) {
@@ -91,7 +97,6 @@ class SoundEffects {
     }, delayMs);
   }
 
-  // Card flip / reveal sound
   public playCardFlip(delayMs: number = 0) {
     if (!this.enabled) return;
     setTimeout(() => {
@@ -117,14 +122,13 @@ class SoundEffects {
     }, delayMs);
   }
 
-  // Win celebration chime
   public playWin() {
     if (!this.enabled) return;
     this.initContext();
     if (!this.ctx) return;
 
     const now = this.ctx.currentTime;
-    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6 arpeggio
+    const notes = [523.25, 659.25, 783.99, 1046.5];
 
     notes.forEach((freq, idx) => {
       if (!this.ctx) return;
@@ -146,7 +150,6 @@ class SoundEffects {
     });
   }
 
-  // Push / Refund sound
   public playPush() {
     if (!this.enabled) return;
     this.initContext();

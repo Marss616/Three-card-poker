@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="theme-color" content="#0a0a0c" />
-  <title>Poker King: All Hail The Hand - Stake Engine</title>
-  <script type="module" crossorigin src="./assets/index-D5DWyzfq.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Csg-h0qs.css">
+  <meta name="theme-color" content="#090d10" />
+  <title>Three Card Poker - Stake Engine</title>
+  <script type="module" crossorigin src="./assets/index-DvV0b7kH.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-HyXF0dgV.css">
 </head>
 <body>
   <div id="app">
@@ -16,11 +16,11 @@
     <div id="replayHeaderBar" class="replay-header-bar hidden">
       <div class="replay-badge">
         <span class="pulse-dot"></span>
-        <span id="txtReplayBadge">ROYAL REPLAY</span>
+        <span id="txtReplayBadge">REPLAY MODE</span>
       </div>
       <div class="replay-stats">
         <div class="replay-stat-item">
-          <span class="replay-stat-label" id="txtReplayCostLabel">Royal Wager:</span>
+          <span class="replay-stat-label" id="txtReplayCostLabel">Wager:</span>
           <span id="replayBetCost" class="replay-stat-val">1.00</span>
         </div>
         <div class="replay-stat-item">
@@ -28,7 +28,7 @@
           <span id="replayMultiplier" class="replay-stat-val highlight">2.0×</span>
         </div>
         <div class="replay-stat-item">
-          <span class="replay-stat-label" id="txtReplayPayoutLabel">Treasury Payout:</span>
+          <span class="replay-stat-label" id="txtReplayPayoutLabel">Payout:</span>
           <span id="replayPayoutVal" class="replay-stat-val win">2.00</span>
         </div>
       </div>
@@ -40,10 +40,8 @@
     <!-- Top Header Navigation -->
     <header class="header-bar">
       <div class="brand-section">
-        <div class="logo-badge king-badge">
-          <span class="crown-icon">👑</span> POKER KING
-        </div>
-        <div class="game-tagline-mini">ALL HAIL THE HAND</div>
+        <div class="logo-badge">STAKE</div>
+        <div class="game-title" id="txtGameTitle">Three Card Poker</div>
         <span id="statusBadge" class="status-badge">Connecting...</span>
       </div>
       <div class="header-right">
@@ -58,33 +56,31 @@
           <span>⚡</span> <span id="txtAutoPlayBtn">Auto</span>
         </button>
         <button id="soundToggleBtn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
-        <button id="rulesBtn" class="icon-btn" title="The King's Decree & Paytable" aria-label="Rules & Paytable">ℹ️</button>
+        <button id="rulesBtn" class="icon-btn" title="Rules & Paytable" aria-label="Rules & Paytable">ℹ️</button>
       </div>
     </header>
 
-    <!-- Main Casino Table Felt (Theme: Poker King Royal Velvet & Gothic Gold) -->
-    <main class="table-felt poker-king-felt" id="tableFelt">
+    <!-- Main Casino Table Felt -->
+    <main class="table-felt" id="tableFelt">
       <!-- Watermark Inlay -->
-      <div class="table-watermark poker-king-theme">
-        <div class="crown-inlay">👑</div>
-        <h1 class="poker-king-title">POKER KING</h1>
-        <div class="king-slogan">ALL HAIL THE HAND</div>
-        <p id="txtDealerQualifyHint">The King Plays With Queen High or Better</p>
+      <div class="table-watermark">
+        <h1>THREE CARD POKER</h1>
+        <p id="txtDealerQualifyHint">Dealer Plays With Queen High or Better</p>
       </div>
 
       <!-- Result Banner Overlay (Dismissible by click/tap anywhere) -->
-      <div id="resultBanner" class="result-banner king-banner">
-        <div id="resultTitle" class="result-title win">👑 ALL HAIL THE HAND!</div>
-        <div id="resultDetail" class="result-detail">Player beats The King</div>
+      <div id="resultBanner" class="result-banner">
+        <div id="resultTitle" class="result-title win">YOU WIN!</div>
+        <div id="resultDetail" class="result-detail">Player beats Dealer</div>
         <div id="resultPayout" class="result-payout">Won: $2.00 (2.0x)</div>
         <div class="dismiss-hint" id="txtDismissHint">Tap anywhere to continue</div>
       </div>
 
-      <!-- Dealer Hand Section (The King) -->
+      <!-- Dealer Hand Section -->
       <section class="hand-area dealer-area">
         <div class="area-label">
-          <span class="royal-dealer-tag">👑 THE KING</span>
-          <span id="dealerHandBadge" class="hand-badge king-hand-badge">Pair of Queens</span>
+          <span>Dealer</span>
+          <span id="dealerHandBadge" class="hand-badge">Pair of Queens</span>
         </div>
         <div id="dealerCards" class="cards-container"></div>
       </section>
@@ -94,7 +90,7 @@
         <div class="bet-spots">
           <div class="bet-spot">
             <span class="spot-title" id="txtSpotAnte">ANTE</span>
-            <div id="spotAnte" class="spot-ring royal-ring active">
+            <div id="spotAnte" class="spot-ring active">
               <div class="placed-chip chip-1" id="spotAnteChip">1</div>
             </div>
             <span id="anteAmount" class="spot-amount">1.00 USD</span>
@@ -102,24 +98,24 @@
 
           <div class="bet-spot">
             <span class="spot-title" id="txtSpotPlay">PLAY</span>
-            <div id="spotPlay" class="spot-ring royal-ring"></div>
+            <div id="spotPlay" class="spot-ring"></div>
             <span id="playAmount" class="spot-amount">0.00 USD</span>
           </div>
         </div>
       </section>
 
-      <!-- Player Hand Section (Challenger) -->
+      <!-- Player Hand Section -->
       <section class="hand-area player-area">
         <div id="playerCards" class="cards-container"></div>
         <div class="area-label" style="margin-top: 4px; margin-bottom: 0;">
-          <span class="royal-player-tag">⚔️ CHALLENGER</span>
-          <span id="playerHandBadge" class="hand-badge king-hand-badge">Straight</span>
+          <span>Player</span>
+          <span id="playerHandBadge" class="hand-badge">Straight</span>
         </div>
       </section>
     </main>
 
     <!-- Bottom Unified Responsive Control Panel -->
-    <footer class="control-panel king-panel" id="controlPanel">
+    <footer class="control-panel" id="controlPanel">
       <!-- Left: Chip Selectors (Dynamically Populated) -->
       <div class="chips-row" id="chipsRow">
         <button class="chip-btn chip-10c" data-val="0.1" aria-label="0.1 chip">0.1</button>
@@ -132,13 +128,13 @@
 
       <!-- Right: Bet Modifiers & Action Button -->
       <div class="actions-group">
-        <div class="bet-input-box king-bet-box">
-          <button id="btnHalf" class="bet-mod-btn" title="Half Wager">½</button>
+        <div class="bet-input-box">
+          <button id="btnHalf" class="bet-mod-btn" title="Half Bet">½</button>
           <span id="betValueDisplay" class="bet-value-display">1.00 USD</span>
-          <button id="btnDouble" class="bet-mod-btn" title="Double Wager">2×</button>
+          <button id="btnDouble" class="bet-mod-btn" title="Double Bet">2×</button>
         </div>
 
-        <button id="dealBtn" class="btn-primary deal-btn king-deal-btn">
+        <button id="dealBtn" class="btn-primary deal-btn">
           <span id="txtDealBtn">DEAL</span>
           <span class="space-hint">Space</span>
         </button>
@@ -176,7 +172,7 @@
 
           <div class="modal-alert-box">
             <span>ℹ️</span>
-            <span id="txtAutoConfirmNotice">Rounds will automatically execute at your current royal wager until completed or stopped.</span>
+            <span id="txtAutoConfirmNotice">Rounds will automatically execute at your current wager until completed or stopped.</span>
           </div>
         </div>
 
@@ -198,9 +194,9 @@
         </div>
         <div class="modal-body">
           <p id="highBetNoticeText" style="line-height: 1.5; font-size: 14px; margin-bottom: 12px;">
-            You are about to wager a high stake before The King. Confirm to proceed.
+            You have selected a high wager. Please confirm before placing this bet.
           </p>
-          <div class="high-bet-summary" id="highBetSummary">Wager: 100.00 USD</div>
+          <div class="high-bet-summary" id="highBetSummary">Bet: 100.00 USD</div>
         </div>
         <div class="modal-footer">
           <button id="cancelHighBetBtn" class="btn-secondary">Cancel</button>
@@ -214,7 +210,7 @@
       <div class="modal-card rules-modal">
         <div class="modal-header">
           <div class="rules-nav-tabs">
-            <button class="tab-btn active" data-tab="tabRules">The King's Decree</button>
+            <button class="tab-btn active" data-tab="tabRules">Rules & Payouts</button>
             <button class="tab-btn" data-tab="tabHands">Hand Rankings</button>
             <button class="tab-btn" data-tab="tabGuide">How to Play</button>
             <button class="tab-btn" data-tab="tabCompliance">Fairness & Notice</button>
@@ -235,17 +231,17 @@
                 <span class="stat-num">22.0×</span>
               </div>
               <div class="stat-pill">
-                <span class="stat-label">Royal Deck</span>
+                <span class="stat-label">Deck</span>
                 <span class="stat-num">52 Cards</span>
               </div>
               <div class="stat-pill">
-                <span class="stat-label">Mode</span>
+                <span class="stat-label">Game Mode</span>
                 <span class="stat-num">Base (Cost 1.0×)</span>
               </div>
             </div>
 
-            <h3 class="section-title">Royal Ante Bonus Paytable</h3>
-            <p class="section-subtitle">Awarded on premium player hands regardless of The King's hand!</p>
+            <h3 class="section-title">Ante Bonus Paytable</h3>
+            <p class="section-subtitle">Paid on qualifying player hands regardless of dealer hand!</p>
             <table class="modal-table">
               <thead>
                 <tr>
@@ -255,7 +251,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>👑 Mini Royal (A-K-Q Suited)</td>
+                  <td>Mini Royal (A-K-Q Suited)</td>
                   <td class="mult">+20.0×</td>
                 </tr>
                 <tr>
@@ -273,13 +269,13 @@
               </tbody>
             </table>
 
-            <h3 class="section-title" style="margin-top: 14px;">The King's Showdown Rules</h3>
+            <h3 class="section-title" style="margin-top: 14px;">Main Game Payouts</h3>
             <ul class="rules-list">
-              <li><strong>The King's Qualification:</strong> The King must hold <strong>Queen-high or better</strong> (Q-6-4 or higher) to qualify.</li>
-              <li><strong>The King Does Not Qualify:</strong> Ante wager pays <strong>1.4×</strong>. Play wager <strong>pushes</strong> (returned 1.0×).</li>
-              <li><strong>The King Qualifies & Player Wins:</strong> Ante wager pays <strong>1:1</strong>, Play wager pays <strong>1:1</strong> (Total return: <strong>2.0×</strong>).</li>
-              <li><strong>Royal Push / Tie:</strong> If Player and The King hold identical hands and kickers, all wagers push (<strong>1.0× returned</strong>).</li>
-              <li><strong>The King Prevails:</strong> Ante and Play wagers are surrendered (0×). Any Ante Bonus earned is still awarded.</li>
+              <li><strong>Dealer Qualification:</strong> Dealer must have <strong>Queen-high or better</strong> (Q-6-4 or higher) to qualify.</li>
+              <li><strong>Dealer Does Not Qualify:</strong> Ante bet pays <strong>1.4×</strong>. Play bet <strong>pushes</strong> (returned 1.0×).</li>
+              <li><strong>Dealer Qualifies & Player Beats Dealer:</strong> Ante bet pays <strong>1:1</strong>, Play bet pays <strong>1:1</strong> (Total return: <strong>2.0×</strong>).</li>
+              <li><strong>Tie / Push:</strong> If Player and Dealer have identical hand rankings and kickers, all wagers push (<strong>1.0× returned</strong>).</li>
+              <li><strong>Dealer Beats Player:</strong> Ante and Play wagers are lost (0×). Any Ante Bonus earned is still awarded.</li>
               <li><strong>Free Games:</strong> Table card game — there are no free spins or feature re-triggers.</li>
             </ul>
           </div>
@@ -287,33 +283,33 @@
           <!-- Tab 2: Hand Rankings -->
           <div id="tabHands" class="tab-content">
             <h3 class="section-title">3-Card Poker Hierarchy</h3>
-            <p class="section-subtitle">Ranked from highest to lowest. In 3-card poker, Straight outranks Flush!</p>
+            <p class="section-subtitle">Ranked from highest to lowest. In 3-card poker, Straight ranks higher than Flush!</p>
 
             <div class="hand-ranks-grid">
               <div class="hand-rank-card">
                 <div class="hr-title">1. Mini Royal Flush</div>
                 <div class="hr-example">A♠ K♠ Q♠</div>
-                <div class="hr-desc">Ace, King, Queen of the same suit. The supreme royal hand.</div>
+                <div class="hr-desc">Ace, King, Queen of the same suit.</div>
               </div>
               <div class="hand-rank-card">
                 <div class="hr-title">2. Straight Flush</div>
                 <div class="hr-example">9♥ 8♥ 7♥</div>
-                <div class="hr-desc">Three consecutive cards of the exact same suit.</div>
+                <div class="hr-desc">Three cards in consecutive rank of the same suit.</div>
               </div>
               <div class="hand-rank-card">
                 <div class="hr-title">3. Three of a Kind</div>
                 <div class="hr-example">8♠ 8♦ 8♣</div>
-                <div class="hr-desc">Three cards of matching rank.</div>
+                <div class="hr-desc">Three cards of the exact same rank.</div>
               </div>
               <div class="hand-rank-card">
                 <div class="hr-title">4. Straight</div>
                 <div class="hr-example">J♦ 10♠ 9♣</div>
-                <div class="hr-desc">Three cards of sequential rank (A-2-3 is low straight).</div>
+                <div class="hr-desc">Three consecutive cards of mixed suits (A-2-3 is lowest straight).</div>
               </div>
               <div class="hand-rank-card">
                 <div class="hr-title">5. Flush</div>
                 <div class="hr-example">K♦ 9♦ 2♦</div>
-                <div class="hr-desc">Three non-consecutive cards of matching suit.</div>
+                <div class="hr-desc">Three non-consecutive cards of the same suit.</div>
               </div>
               <div class="hand-rank-card">
                 <div class="hr-title">6. Pair</div>
@@ -323,7 +319,7 @@
               <div class="hand-rank-card">
                 <div class="hr-title">7. High Card</div>
                 <div class="hr-example">A♣ J♦ 6♠</div>
-                <div class="hr-desc">Highest single card held when no combinations form.</div>
+                <div class="hr-desc">Highest single card held when no matching combination exists.</div>
               </div>
             </div>
           </div>
@@ -332,11 +328,11 @@
           <div id="tabGuide" class="tab-content">
             <h3 class="section-title">User Interaction Guide</h3>
             <ul class="rules-list">
-              <li><strong>Placing Wagers:</strong> Click or tap any chip value at the bottom to adjust your Ante wager. Use <strong>½</strong> or <strong>2×</strong> for rapid wager adjustments.</li>
+              <li><strong>Placing Wagers:</strong> Click or tap any chip value at the bottom to adjust your Ante wager. Use <strong>½</strong> or <strong>2×</strong> for quick bet halving or doubling.</li>
               <li><strong>Starting a Round:</strong> Click the <strong>DEAL</strong> button or press the <kbd>Space</kbd> bar on your keyboard.</li>
-              <li><strong>Play Bet:</strong> An equal Play bet is automatically matched to your Ante to proceed directly to showdown against The King.</li>
-              <li><strong>Auto Play:</strong> Click <strong>⚡ Auto</strong> to configure automated rounds with a confirmation step. You can cancel at any time with the <strong>STOP AUTO</strong> button.</li>
-              <li><strong>Audio Settings:</strong> Toggle royal sounds on or off using the <strong>🔊/🔇</strong> icon in the header. Your preference is automatically saved.</li>
+              <li><strong>Play Bet:</strong> An equal Play bet is automatically matched to your Ante to proceed directly to showdown.</li>
+              <li><strong>Auto Play:</strong> Click <strong>⚡ Auto</strong> to configure automated rounds. A confirmation dialog will appear before auto-play begins. You can cancel at any time with the <strong>STOP AUTO</strong> button.</li>
+              <li><strong>Audio Settings:</strong> Toggle sound effects on or off using the <strong>🔊/🔇</strong> icon in the header. Your preference is automatically saved.</li>
               <li><strong>Dismissing Results:</strong> When a round completes, tap anywhere on the screen to clear the result banner and deal again.</li>
               <li><strong>Replays:</strong> Round replays can be viewed via authorized replay links with full transparency.</li>
             </ul>
@@ -354,7 +350,7 @@
         </div>
 
         <div class="modal-footer">
-          <button id="closeModalFooterBtn" class="btn-primary" style="width: 100%;">Understood</button>
+          <button id="closeModalFooterBtn" class="btn-primary" style="width: 100%;">Got It</button>
         </div>
       </div>
     </div>
